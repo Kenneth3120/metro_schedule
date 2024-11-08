@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Schedule</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
+            <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">Pune Metro Schedule</h1>
+            
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="station" class="block text-lg font-medium text-gray-700">Select Station:</label>
+                    <select name="station" id="station" class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        {% for station in stations %}
+                            <option value="{{ station }}" {% if station == selected_station %}selected{% endif %}>{{ station }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200">Check Next Metro</button>
+            </form>
+
+            {% if next_metro %}
+                <div class="mt-6 text-center text-xl text-green-600">
+                    <p>Next Metro at <span class="font-semibold">{{ next_metro }}</span></p>
+                </div>
+            {% elif selected_station %}
+                <div class="mt-6 text-center text-xl text-red-600">
+                    <p>No more metros for today at <span class="font-semibold">{{ selected_station }}</span></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
