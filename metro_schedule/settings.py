@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-8g!*rk%v%tdwwgi0xy4=al_0z932z%98-9m%*e_kl^$70kestc
 DEBUG = True
 
 ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -122,3 +123,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/login/'
+
