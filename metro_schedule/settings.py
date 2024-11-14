@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
 # # The line `ALLOWED_HOSTS = []` in Django settings is used to specify a list of host/domain names
 # that this Django site can serve. When the Django project is deployed in production, you need to
 # specify the domain names or IP addresses that are allowed to access the site.
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
