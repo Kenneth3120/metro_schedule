@@ -9,9 +9,9 @@ SECRET_KEY = 'django-insecure-8g!*rk%v%tdwwgi0xy4=al_0z932z%98-9m%*e_kl^$70kestc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
+# ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [

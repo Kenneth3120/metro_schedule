@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,94 +11,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/gsap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            gsap.from('.navbar-logo', { opacity: 0, y: -50, duration: 1 });
-            gsap.from('.navbar-links a', { opacity: 0, x: -100, stagger: 0.2, duration: 1, delay: 0.5 });
-            gsap.from('.main-content', { opacity: 0, y: 50, duration: 1, delay: 1 });
-            gsap.from('.submit-btn', { opacity: 0, y: 50, duration: 1, delay: 1.5 });
+            // gsap animations can be added here if needed
         });
 
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            const line1 = document.getElementById('line1');
-            const line2 = document.getElementById('line2');
-            const line3 = document.getElementById('line3');
-            const isOpen = !menu.classList.contains('hidden');
+        function toggleProfileMenu() {
+            const profileMenu = document.getElementById('profile-menu');
+            profileMenu.classList.toggle('hidden');
+        }
 
-            if (isOpen) {
-                // Close the menu
-                gsap.to(menu, { opacity: 0, y: -50, duration: 0.5, onComplete: () => menu.classList.add('hidden') });
-                gsap.to(line1, { rotation: 0, y: 0, duration: 0.3 });
-                gsap.to(line2, { opacity: 1, duration: 0.3 });
-                gsap.to(line3, { rotation: 0, y: 0, duration: 0.3 });
-            } else {
-                // Open the menu
-                menu.classList.remove('hidden');
-                gsap.fromTo(menu, { opacity: 0, y: -50 }, { opacity: 1, y: 0, duration: 0.5 });
-                gsap.to(line1, { rotation: 45, y: 8, duration: 0.3 });
-                gsap.to(line2, { opacity: 0, duration: 0.3 });
-                gsap.to(line3, { rotation: -45, y: -8, duration: 0.3 });
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-btn') && !event.target.closest('#profile-menu')) {
+                const profileMenu = document.getElementById('profile-menu');
+                if (!profileMenu.classList.contains('hidden')) {
+                    profileMenu.classList.add('hidden');
+                }
             }
         }
     </script>
 </head>
 
 <body class="bg-gray-900 text-gray-300 font-sans">
-    <nav class="bg-gray-800 p-4">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <div class="flex items-center navbar-logo">
-                <img src="{% static 'images/transparent_logo.png' %}" alt="Logo" class="h-8 w-45 mr-2">
+    {% block content %}
+    
+    <!-- Alert Messages -->
+    {% if messages %}
+    <div class="mb-4 max-w-md mx-auto">
+        {% for message in messages %}
+            <div style="background-color: #FF7F50;" class="notification-message text-white p-3 rounded-lg shadow-lg flex justify-between items-center mb-2 border-l-4 border-orange-900 ">
+                <span class="font-bold">{{ message }}</span>
+                <button onclick="this.parentElement.style.display='none'" class="ml-4 text-white hover:text-gray-300 text-2xl font-bold focus:outline-none">
+                    &times;
+                </button>
             </div>
-            <div class="hidden md:flex space-x-6 navbar-links">
-                <a href="#" class="text-indigo-400 hover:text-indigo-200">Home</a>
-                <a href="#" class="text-gray-300 hover:text-gray-200">Schedule</a>
-                <a href="#" class="text-gray-300 hover:text-gray-200">Contact</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}" class="text-gray-300 hover:text-gray-200">Profile</a>
-                {% endif %}
-            </div>
-            <button class="md:hidden text-gray-300 focus:outline-none" onclick="toggleMenu()">
-                <div class="flex flex-col items-center">
-                    <span class="bg-white block h-0.5 w-6 mb-1 transition-transform duration-300" id="line1"></span>
-                    <span class="bg-white block h-0.5 w-6 mb-1 transition-opacity duration-300" id="line2"></span>
-                    <span class="bg-white block h-0.5 w-6 transition-transform duration-300" id="line3"></span>
-                </div>
-            </button>
-        </div>
-        <div id="menu" class="hidden fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50">
-            <div class=" flex flex-col space-y-6">
-                <a href="#" class="text-white text-2xl hover:text-indigo-400 transition duration-200">Home</a>
-                <a href="#" class="text-white text-2xl hover:text-indigo-400 transition duration-200">Schedule</a>
-                <a href="#" class="text-white text-2xl hover:text-indigo-400 transition duration-200">Contact</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}" class="text-white text-2xl hover:text-indigo-400 transition duration-200">Profile</a>
-                {% endif %}
-            </div>
-            <button class="absolute top-4 right-4 text-white" onclick="toggleMenu()">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="close-icon" style="display: none;">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-                <div class="flex flex-col items-center" id="hamburger-icon">
-                    <span class="bg-white block h-0.5 w-6 mb-1 transition-transform duration-300" id="line1"></span>
-                    <span class="bg-white block h-0.5 w-6 mb-1 transition-opacity duration-300" id="line2"></span>
-                    <span class="bg-white block h-0.5 w-6 transition-transform duration-300" id="line3"></span>
-                </div>
-            </button>
-        </div>
-    </nav>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-    <div class="min-h-screen flex items-center justify-center p-4 main-content">
+    <div class="min-h-screen flex items-center justify-center p-4 pb-75 main-content">
         <div class="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-lg">
             <h1 class="text-3xl font-bold text-center text-indigo-500 mb-6">Pune Metro Schedule</h1>
-            
-            {% if messages %}
-                <div class="mb-4">
-                    {% for message in messages %}
-                        <div class="alert alert-info bg-indigo-600 text-white p-3 rounded-lg">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
             
             <form method="post" class="space-y-6">
                 {% csrf_token %}
@@ -138,5 +96,6 @@
             {% endif %}
         </div>
     </div>
+    {% endblock %}
 </body>
 </html>

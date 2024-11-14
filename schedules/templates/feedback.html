@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% load form_tags %}
+
+{% block content %}
+<body class="bg-gray-900 text-gray-300 font-sans">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-3xl font-bold text-white mb-6 text-center">Feedback Form</h2>
+            
+            {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                        <div class="alert alert-info bg-indigo-600 text-white p-3 rounded-lg flex justify-between items-center">
+                            <span>{{ message }}</span>
+                            <button type="button" class="text-white font-bold ml-2" onclick="this.parentElement.style.display='none';">&times;</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                
+                <div>
+                    <label for="id_name" class="block text-gray-400">Your Name</label>
+                    {{ form.name |add_class:"w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150" }}
+                </div>
+                
+                <div>
+                    <label for="id_email" class="block text-gray-400">Your Email</label>
+                    {{ form.email|add_class:"w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150" }}
+                </div>
+                
+                <div>
+                    <label for="id_feedback" class="block text-gray-400">Your Feedback</label>
+                    {{ form.feedback|add_class:"w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150" }}
+                </div>
+                
+                <button type="submit" class="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200">
+                  Submit Feedback
+              </button>
+            </form>
+
+            <h3 class="text-2xl font-bold text-white mt-8">All Feedback</h3>
+            <div class="mt-4 space-y-4">
+                {% for feedback in feedbacks %}
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <p class="text-gray-300"><strong>{{ feedback.name }}</strong> ({{ feedback.email }})</p>
+                        <p class="text-gray-400">{{ feedback.feedback }}</p>
+                        <p class="text-gray-500 text-sm">{{ feedback.created_at }}</p>
+                        {% if feedback.user == request.user %}
+                            <div class="mt-2 flex space-x-2">
+                                <a href="{% url 'edit_feedback' feedback.id %}" class="text-blue-500 hover:underline">Edit</a>
+                                <a href="{% url 'delete_feedback' feedback.id %}" class="text-red-500 hover:underline">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <p class="text-gray-400">No feedback available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
