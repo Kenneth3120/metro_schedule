@@ -9,12 +9,8 @@ SECRET_KEY = 'django-insecure-8g!*rk%v%tdwwgi0xy4=al_0z932z%98-9m%*e_kl^$70kestc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
-
-# # The line `ALLOWED_HOSTS = []` in Django settings is used to specify a list of host/domain names
-# that this Django site can serve. When the Django project is deployed in production, you need to
-# specify the domain names or IP addresses that are allowed to access the site.
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
+ALLOWED_HOSTS = [ ]
 
 # Application definition
 INSTALLED_APPS = [
@@ -89,8 +85,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'  # Ensure this has a leading slash
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Define static files directory
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory to collect static files
 
 # Login settings
 LOGIN_URL = 'login'

@@ -47,6 +47,11 @@ from . import views
 from django.urls import path
 from .views import feedback, edit_feedback, delete_feedback
 
+from django.urls import path
+from .views import feedback, edit_feedback, delete_feedback
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('', views.user_login, name='login'),
     path('home/', views.home, name='home'),
@@ -55,6 +60,10 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('logout/', views.user_logout, name='logout'),
     path('feedback/', feedback, name='feedback'),
-    path('feedback/edit/<int:feedback_id>/', edit_feedback, name='edit_feedback'),  # Edit feedback
-    path('feedback/delete/<int:feedback_id>/', delete_feedback, name='delete_feedback'),  # Delete feedback
+    path('feedback/edit/<int:feedback_id>/', edit_feedback, name='edit_feedback'),
+    path('feedback/delete/<int:feedback_id>/', delete_feedback, name='delete_feedback'),
 ]
+
+# Serve static files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
