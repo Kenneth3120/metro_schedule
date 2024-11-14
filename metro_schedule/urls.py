@@ -1,10 +1,15 @@
+# # metro_schedule/urls.py
+# from django.urls import path, include
+
+# urlpatterns = [
+#     path('', include('schedules.urls')),  # Directs all URLs to the `schedules` app
+#     path('home/', include('schedules.urls')),  # In case `/home/` is directly accessed
+# ]
+
+
 # metro_schedule/urls.py
-from django.urls import path
-from schedules import views  # Adjust the import path as needed
+from django.urls import path, include
 
 urlpatterns = [
-    path('', views.user_login, name='login'),  # Set login as the default page
-    path('home/', views.home, name='home'),
-    path('login/', views.user_login, name='login'),
-    path('signup/', views.user_signup, name='signup'),
+    path('', include('schedules.urls')),  # Includes all paths from schedules/urls.py
 ]
