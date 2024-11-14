@@ -9,8 +9,11 @@ SECRET_KEY = 'django-insecure-8g!*rk%v%tdwwgi0xy4=al_0z932z%98-9m%*e_kl^$70kestc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
+ALLOWED_HOSTS = ['metro-schedule-0f8t.onrender.com']
 
+# # The line `ALLOWED_HOSTS = []` in Django settings is used to specify a list of host/domain names
+# that this Django site can serve. When the Django project is deployed in production, you need to
+# specify the domain names or IP addresses that are allowed to access the site.
 ALLOWED_HOSTS = []
 
 # Application definition
